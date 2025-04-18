@@ -47,20 +47,6 @@
   text-align: center;
 }
 
-#progressBar {
-  width: 76.5rem;
-  border: none;
-}
-
-#progressBarFull {
-  height: 2rem;
-  background-color: #768692;
-  border: none;
-  border-radius: 100rem;
-  transition: width 0.4s ease;
-  max-width: 100%; 
-}
-
 #loader {
   border: 1.6rem solid white;
   border-radius: 50%;
@@ -118,4 +104,14 @@
 .question-text {
   font-size: 3rem;
   text-align: center;
+}
+
+#game.fade-out {
+  opacity: 0;
+  transition: opacity 0.5s ease-in;
+}
+
+#game.fade-in {
+  opacity: 1;
+  transition: opacity 0.5s ease-out;
 }
