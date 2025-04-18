@@ -1,3 +1,4 @@
+-hydro\index.html -->
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
@@ -6,13 +7,34 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Quiz Hydro</title>
     <link rel="stylesheet" href="./styles/app.css" />
+    <link rel="stylesheet" href="./styles/login.css" />
   </head>
   <body>
     <div class="container">
-      <div id="home" class="flex-center flex-column">
-        <h1>Quiz Hydro</h1>
+      <h1 class="title-center">Quiz Hydro</h1>
+      <div id="login" class="flex-center flex-column">
+        <form id="login-form" class="flex-center flex-column">
+          <input type="text" id="fullname" name="fullname"
+            placeholder="Nome completo" required />
+          <input type="text" id="employee_id" name="employee_id"
+            placeholder="Matrícula" required />
+          <input type="text" id="company" name="company"
+            placeholder="Nome da empresa" required />
+          <input type="text" id="job_title" name="job_title"
+            placeholder="Função ou cargo" required />
+          <input type="tel" id="phone" name="phone"
+            placeholder="Contato telefone"
+            pattern="[0-9]{10,11}" title="Digite um número de telefone válido"
+            required />
+          <button type="submit" class="btn">Iniciar Quiz</button>
+          <p id="login-error" class="error hidden">Por favor, preencha todos os
+            campos corretamente</p>
+        </form>
+      </div>
+      <div id="home" class="flex-center flex-column hidden">
         <a class="btn" href="./pages/game.html">Jogar</a>
       </div>
     </div>
+    <script src="./scripts/login.js"></script>
   </body>
 </html>

@@ -1,0 +1,46 @@
+#login-form {
+    width: 100%;
+    max-width: 40rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.error {
+    color: #dc3545;
+    font-size: 1.6rem;
+    margin-top: 1rem;
+}
+
+.hidden {
+    display: none;
+}
+
+input {
+    font-size: 1.8rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    width: 100%;
+    max-width: 30rem;
+    border: 0.1rem solid #768692;
+    border-radius: 0.5rem;
+}
+
+#login-form .btn {
+    margin-top: 1rem;
+}
+
+input:invalid {
+    /* border-color: #dc3545; */
+}
+
+input:valid {
+    border-color: #28a745;
+}
+
+@media only screen and (max-width: 480px) {
+    input {
+        font-size: 1.6rem;
+        padding: 1.2rem;
+    }
+}
