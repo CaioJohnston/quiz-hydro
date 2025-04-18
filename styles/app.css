@@ -205,3 +205,14 @@ input::placeholder {
     font-size: 1.4rem;
   }
 }
+
+@media only screen and (min-width: 768px) {
+  .container {
+    max-width: 768px;
+    margin: 0 auto;
+    border-left: 0.2rem solid #eee;
+    border-right: 0.2rem solid #eee;
+    background-color: white;
+    box-shadow: 0 0 2rem rgba(0, 0, 0, 0.05);
+  }
+}

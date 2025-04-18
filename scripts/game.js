@@ -9,9 +9,6 @@ let acceptingAnswers = false;
 let questionCounter = 0;
 let availableQuestions = [];
 let correctAnswers = 0;
-let timer;
-const TOTAL_TIME = 30;
-let timeLeft = TOTAL_TIME;
 
 const questions = [
     {
@@ -58,23 +55,41 @@ getNewQuestion = () => {
         localStorage.setItem('correctAnswers', correctAnswers);
         return window.location.assign('../pages/end.html');
     }
-    questionCounter++;
 
-    const questionIndex = Math.floor(Math.random() * availableQuestions.length);
-    currentQuestion = availableQuestions[questionIndex];
-    if (question) {
-        question.innerText = currentQuestion.question;
-    }
+    // Adiciona fade-out antes de carregar nova pergunta
+    game.classList.add('fade-out');
 
-    choices.forEach((choice, index) => {
-        if (choice) {
-            choice.innerText = currentQuestion.options[index];
+    setTimeout(() => {
+        questionCounter++;
+        const questionIndex = Math.floor(Math.random() * availableQuestions.length);
+        currentQuestion = availableQuestions[questionIndex];
+        if (question) {
+            question.innerText = currentQuestion.question;
         }
-    });
 
-    availableQuestions.splice(questionIndex, 1);
-    acceptingAnswers = true;
-    resetTimer();
+        choices.forEach((choice, index) => {
+            if (choice) {
+                choice.innerText = currentQuestion.options[index];
+            }
+        });
+
+        // Atualiza contador textual
+        const progressText = document.getElementById('progressText');
+        if (progressText) {
+            progressText.innerText = `Pergunta ${questionCounter} de ${MAX_QUESTIONS}`;
+        }
+
+        availableQuestions.splice(questionIndex, 1);
+        acceptingAnswers = true
+
+        // Aplica fade-in após nova pergunta
+        game.classList.remove('fade-out');
+        game.classList.add('fade-in');
+
+        setTimeout(() => {
+            game.classList.remove('fade-in');
+        }, 500);
+    }, 500); // tempo para fade-out
 };
 
 choices.forEach((choice, index) => {
@@ -103,27 +118,6 @@ choices.forEach((choice, index) => {
         }, 2000);
     });
 });
-
-resetTimer = () => {
-    clearInterval(timer);
-    timeLeft = TOTAL_TIME;
-    progressBarFull.style.width = '100%';
-
-    timer = setInterval(() => {
-        timeLeft--;
-        const progressWidth = (timeLeft / TOTAL_TIME) * 100;
-        progressBarFull.style.width = `${progressWidth}%`;
-
-        if (timeLeft <= 0) {
-            clearInterval(timer);
-            acceptingAnswers = false;
-            shakeScreen();
-            setTimeout(() => {
-                getNewQuestion();
-            }, 1000);
-        }
-    }, 1000);
-};
 
 const showConfetti = () => {
     confetti({
