@@ -33,3 +33,16 @@ export default async function handler(req, res) {
 
   return res.status(200).json({ permitido });
 }
+
+const response = await fetch('/api/check-limit', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(userData)
+  });
+  
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error(`Erro ${response.status}: ${text}`);
+  }
+  
+  const data = await response.json();
