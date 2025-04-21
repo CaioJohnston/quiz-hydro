@@ -20,8 +20,11 @@ form.addEventListener("submit", async (e) => {
   const response = await fetch("/api/check-limit", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ matr: employee_id })
-  });
+    body: JSON.stringify({ 
+      matr: employee_id,
+      empresa: company
+    })
+  });  
 
   const data = await response.json();
 
@@ -31,7 +34,7 @@ form.addEventListener("submit", async (e) => {
     return;
   }
 
-  // Armazenar os dados localmente
+  // Armazenar os dados localmente (dá uma atenção aqui Carlos)
   const userData = {
     fullname,
     employee_id,

@@ -1,4 +1,3 @@
-
 import { createClient } from '@supabase/supabase-js';
 
 const supabase = createClient(
@@ -11,12 +10,13 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Método não permitido' });
   }
 
-  const { matr } = req.body;
+  const { matr, empresa } = req.body;
 
   const { data, error } = await supabase
     .from("quiz_logs")
     .select("data_acesso")
-    .eq("matr", matr);
+    .eq("matr", matr)
+    .eq("empresa", empresa);
 
   if (error) return res.status(500).json({ error: error.message });
 
