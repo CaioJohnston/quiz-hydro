@@ -44,3 +44,15 @@ input:valid {
         padding: 1.2rem;
     }
 }
+
+.error {
+    color: rgb(255, 80, 80);
+    margin-top: 10px;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
