@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const btnBack = document.getElementById('btn-back');
 
   const checkEmployeeId = document.getElementById('check-employee-id');
-  const checkCompany = document.getElementById('check-company'); // ADICIONADO
   const employeeId = document.getElementById('employee_id');
   const checkError = document.getElementById('check-error');
   const checkLoading = document.getElementById('check-loading');
@@ -80,10 +79,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
   async function verificarMatricula() {
     const matricula = checkEmployeeId.value.trim();
-    const empresa = checkCompany.value.trim(); // ADICIONADO
 
-    if (!matricula || !empresa) {
-      checkError.innerText = 'Por favor, digite sua matrícula e empresa';
+    if (!matricula) {
+      checkError.innerText = 'Por favor, digite sua matrícula';
       checkError.classList.remove('hidden');
       return;
     }
@@ -98,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function () {
       if (isLocalhost) {
         setTimeout(() => {
           checkLoading.classList.add('hidden');
-          checkError.innerText = 'Matrícula não encontrada. Crie um novo cadastro';
+          checkError.innerText = 'Matrícula não encontrada. Crie um novo cadastro.';
           checkError.classList.remove('hidden');
         }, 1000);
       } else {
@@ -117,31 +115,29 @@ document.addEventListener('DOMContentLoaded', function () {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               matr: matricula,
-              empresa: empresa // ADICIONADO
+              empresa: data.user.empresa
             })
           });
 
           const limitData = await limitResponse.json();
 
           if (limitData.permitido) {
-            // Salva manualmente o nome da empresa digitado para consistência
-            data.user.empresa = empresa;
             localStorage.setItem('userData', JSON.stringify(data.user));
             checkMatriculaDiv.classList.add('hidden');
             homeDiv.classList.remove('hidden');
           } else {
-            checkError.innerText = 'Você já jogou 2 vezes nesta semana';
+            checkError.innerText = 'Você já jogou 2 vezes nesta semana.';
             checkError.classList.remove('hidden');
           }
         } else {
-          checkError.innerText = 'Matrícula não encontrada. Crie um novo cadastro';
+          checkError.innerText = 'Matrícula não encontrada. Crie um novo cadastro.';
           checkError.classList.remove('hidden');
         }
       }
     } catch (error) {
       console.error('Erro ao verificar matrícula:', error);
       checkLoading.classList.add('hidden');
-      checkError.innerText = 'Erro ao verificar matrícula. Tente novamente';
+      checkError.innerText = 'Erro ao verificar matrícula. Tente novamente.';
       checkError.classList.remove('hidden');
     }
   }
@@ -165,9 +161,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
   btnNewUser.addEventListener('click', function () {
     const matricula = checkEmployeeId.value.trim();
+
     if (matricula) {
       employeeId.value = matricula;
     }
+
     checkMatriculaDiv.classList.add('hidden');
     loginDiv.classList.remove('hidden');
   });
@@ -184,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const phoneValue = phoneInput.value.trim();
 
       if (!fullname || !employee_id || !company || !job_title || !phoneValue) {
-        loginError.innerText = 'Por favor, preencha todos os campos corretamente';
+        loginError.innerText = 'Por favor, preencha todos os campos corretamente.';
         loginError.classList.remove('hidden');
         return;
       }
@@ -203,7 +201,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const permitido = data.permitido;
 
         if (!permitido) {
-          loginError.innerText = 'Você já jogou o quiz 2 vezes nesta semana';
+          loginError.innerText = 'Você já jogou o quiz 2 vezes nesta semana.';
           loginError.classList.remove('hidden');
           return;
         }
@@ -222,7 +220,7 @@ document.addEventListener('DOMContentLoaded', function () {
         homeDiv.classList.remove('hidden');
       } catch (error) {
         console.error('Erro:', error);
-        loginError.innerText = 'Ocorreu um erro. Tente novamente';
+        loginError.innerText = 'Ocorreu um erro. Tente novamente.';
         loginError.classList.remove('hidden');
       }
     });
