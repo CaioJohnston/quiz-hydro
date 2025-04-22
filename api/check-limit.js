@@ -12,34 +12,27 @@ export default async function handler(req, res) {
 
   const { matr, empresa } = req.body;
 
-  if (!matr) {
-    return res.status(400).json({ error: 'Matrícula não fornecida' });
-  }
+  const { data, error } = await supabase
+    .from("quiz_logs")
+    .select("data_acesso")
+    .eq("matr", matr)
+    .eq("empresa", empresa);
 
-  try {
-    // Consultar registros do quiz para o usuário na semana atual
-    const hoje = new Date();
-    const domingo = new Date(hoje);
-    domingo.setDate(hoje.getDate() - hoje.getDay()); // início da semana
-    domingo.setHours(0, 0, 0, 0); // início do dia
+  if (error) return res.status(500).json({ error: error.message });
 
-    const { data, error } = await supabase
-      .from("quiz_logs")
-      .select("*")
-      .eq("matr", matr)
-      .gte("data_acesso", domingo.toISOString());
+  const hoje = new Date();
+  const domingo = new Date(hoje);
+  domingo.setDate(hoje.getDate() - hoje.getDay());
 
-    if (error) {
-      console.error("Erro na consulta:", error);
-      return res.status(500).json({ error: error.message });
-    }
+  const jogosDaSemana = data.filter((registro) => {
+    const dataRegistro = new Date(registro.data_acesso);
+    return dataRegistro >= domingo;
+  });
 
-    // Verificar se o usuário já jogou 2 vezes nesta semana
-    const permitido = data.length < 2;
-    
-    return res.status(200).json({ permitido });
-  } catch (error) {
-    console.error("Erro:", error);
-    return res.status(500).json({ error: error.message });
-  }
+  const permitido = jogosDaSemana.length < 2;
+
+  return res.status(200).json({
+    permitido,
+    jogos_da_semana: jogosDaSemana
+  });
 }
