@@ -212,10 +212,11 @@ document.addEventListener('DOMContentLoaded', function () {
           employee_id,
           company,
           job_title,
-          phone: phoneValue
+          phone: phoneValue,
+          tentativas
         };
-
-        localStorage.setItem('userData', JSON.stringify(userData));
+        
+        localStorage.setItem('userData', JSON.stringify(userData));;
 
         loginDiv.classList.add('hidden');
         homeDiv.classList.remove('hidden');
