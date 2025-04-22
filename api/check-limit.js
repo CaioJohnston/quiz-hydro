@@ -37,7 +37,9 @@ export default async function handler(req, res) {
     // Verificar se o usuário já jogou 2 vezes nesta semana
     const permitido = data.length < 2;
     
-    return res.status(200).json({ permitido });
+    return res.status(200).json({ permitido,
+      jogos: data.length,
+     });
   } catch (error) {
     console.error("Erro:", error);
     return res.status(500).json({ error: error.message });

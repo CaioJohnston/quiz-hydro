@@ -14,24 +14,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const total = parseInt(mostRecentScore, 10);
 
   try {
-    // Verificar quantas vezes o usuário jogou esta semana
-    const checkLimitResponse = await fetch('/api/check-limit', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        matr: userData.employee_id,
-        empresa: userData.company
-      })
-    });
-
-    if (!checkLimitResponse.ok) {
-      throw new Error(`Erro na API: ${checkLimitResponse.status}`);
-    }
-
-    const limitData = await checkLimitResponse.json();
-    const tentativas = limitData.jogos || 0;
-
-    // Enviar para o banco (sem revalidar limite)
+    // Salvando o resultado aqui
     const save = await fetch('/api/save-score', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -56,14 +39,35 @@ document.addEventListener("DOMContentLoaded", async () => {
       return;
     }
 
-    // Determina a mensagem com base no desempenho e no número de tentativas
+    // Verifica quantas vezes jogou 
+    const checkLimitResponse = await fetch('/api/check-limit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        matr: userData.employee_id,
+        empresa: userData.company
+      })
+    });
+
+    if (!checkLimitResponse.ok) {
+      throw new Error(`Erro na API: ${checkLimitResponse.status}`);
+    }
+
+    const limitData = await checkLimitResponse.json();
+    const jogosTotal = limitData.jogos || 0;
+
+    const tentativasAnteriores = jogosTotal - 1;
+
+    console.log(`Total de jogos: ${jogosTotal}, Tentativas anteriores: ${tentativasAnteriores}`);
+
     let feedbackMsg = "";
-    if (correct >= 4 && tentativas == 0) {
+
+    if (correct >= 4 && tentativasAnteriores == 0) {
       feedbackMsg = "🎉 Parabéns!\n\nVocê mandou muito bem no quiz! 👏\nIsso mostra que você está ligado nos temas da COP 30. Continue assim! 🌎💚";
-      console.log(tentativas)
-    } else if (correct >= 3 && tentativas >= 1) {
+      console.log(tentativasAnteriores);
+    } else if (correct >= 3 && tentativasAnteriores >= 1) {
+      console.log(tentativasAnteriores);
       feedbackMsg = "🚨 Fique ligado!\n\nAcompanhe os próximos vídeos, participe dos quizzes e compartilhe o que aprendeu. O conhecimento é o primeiro passo para a ação! 🌍✨";
-      console.log(tentativas)
     } else {
       feedbackMsg = "💡 Quase lá!\n\nVocê respondeu algumas perguntas, mas ainda dá pra melhorar! Que tal assistir novamente ao vídeo e tentar o quiz mais uma vez?";
     }
@@ -72,11 +76,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   } catch (error) {
     console.error("Erro:", error);
-    // Mesmo com erro, mostramos algum feedback básico
     finalScore.innerText = `Você acertou ${correct} de ${total} questões!\n\n💡 Obrigado por participar do nosso quiz!`;
   }
 
-  // Botão de retorno (sempre mostra, mesmo com erro)
   const restartBtn = document.createElement("button");
   restartBtn.innerText = "Voltar à Página Inicial";
   restartBtn.className = "btn";
