@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const btnBack = document.getElementById('btn-back');
 
   const checkEmployeeId = document.getElementById('check-employee-id');
+  const checkCompany = document.getElementById('check-company'); // ADICIONADO
   const employeeId = document.getElementById('employee_id');
   const checkError = document.getElementById('check-error');
   const checkLoading = document.getElementById('check-loading');
@@ -79,9 +80,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
   async function verificarMatricula() {
     const matricula = checkEmployeeId.value.trim();
+    const empresa = checkCompany.value.trim(); // ADICIONADO
 
-    if (!matricula) {
-      checkError.innerText = 'Por favor, digite sua matrícula';
+    if (!matricula || !empresa) {
+      checkError.innerText = 'Por favor, digite sua matrícula e empresa';
       checkError.classList.remove('hidden');
       return;
     }
@@ -115,13 +117,15 @@ document.addEventListener('DOMContentLoaded', function () {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               matr: matricula,
-              empresa: data.user.empresa
+              empresa: empresa // ADICIONADO
             })
           });
 
           const limitData = await limitResponse.json();
 
           if (limitData.permitido) {
+            // Salva manualmente o nome da empresa digitado para consistência
+            data.user.empresa = empresa;
             localStorage.setItem('userData', JSON.stringify(data.user));
             checkMatriculaDiv.classList.add('hidden');
             homeDiv.classList.remove('hidden');
@@ -161,11 +165,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
   btnNewUser.addEventListener('click', function () {
     const matricula = checkEmployeeId.value.trim();
-
     if (matricula) {
       employeeId.value = matricula;
     }
-
     checkMatriculaDiv.classList.add('hidden');
     loginDiv.classList.remove('hidden');
   });
