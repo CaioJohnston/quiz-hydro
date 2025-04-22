@@ -12,7 +12,8 @@ thankName.innerText = `${name}, obrigado por jogar!`;
 document.addEventListener("DOMContentLoaded", async () => {
   const correct = parseInt(correctAnswers, 10);
   const total = parseInt(mostRecentScore, 10);
-  const tentativas = userData.tentativas || 0;
+  const registros = await getJogosDaSemana(matr);
+  const tentativas = registros.length || 0;
 
   // Enviar para o banco (sem revalidar limite)
   const save = await fetch('/api/save-score', {
@@ -40,7 +41,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     feedbackMsg = "🎉 Parabéns!\n\nVocê mandou muito bem no quiz! 👏\nIsso mostra que você está ligado nos temas da COP 30. Continue assim! 🌎💚";
   } else if (correct >= 3 && tentativas >= 1) {
     feedbackMsg = "🚨 Fique ligado!\n\nAcompanhe os próximos vídeos, participe dos quizzes e compartilhe o que aprendeu. O conhecimento é o primeiro passo para a ação! 🌍✨";
-  } else {
+  } else if (correct < 3 && tentativas >= 1) {
+    feedbackMsg = "📣 Fique Ligado nos Conteúdos:\n🚨 Fique ligado!\nAcompanhe os próximos vídeos, participe dos quizzes e compartilhe o que aprendeu. O conhecimento é o primeiro passo para a ação!🌍✨"
+  }
+  else {
     feedbackMsg = "💡 Quase lá!\n\nVocê respondeu algumas perguntas, mas ainda dá pra melhorar! Que tal assistir novamente ao vídeo e tentar o quiz mais uma vez?";
   }
 
