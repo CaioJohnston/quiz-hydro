@@ -223,3 +223,29 @@ input::placeholder {
     box-shadow: 0 0 2rem rgba(0, 0, 0, 0.05);
   }
 }
+
+.quiz-instructions {
+  max-width: 600px;
+  text-align: left;
+  background-color: #f4f4f4;
+  padding: 20px;
+  margin-bottom: 30px;
+  border-radius: 10px;
+  font-size: 1rem;
+  color: #333;
+}
+
+.quiz-instructions h2 {
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+  color: #007E7A;
+}
+
+.quiz-instructions ul {
+  margin: 10px 0;
+  padding-left: 20px;
+}
+
+.quiz-instructions ul li {
+  margin-bottom: 8px;
+}
