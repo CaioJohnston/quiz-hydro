@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Determina a mensagem com base no desempenho e no número de tentativas
     let feedbackMsg = "";
-    if (correct >= 4) {
+    if (correct >= 4 && tentativas == 0) {
       feedbackMsg = "🎉 Parabéns!\n\nVocê mandou muito bem no quiz! 👏\nIsso mostra que você está ligado nos temas da COP 30. Continue assim! 🌎💚";
     } else if (correct >= 3 && tentativas >= 1) {
       feedbackMsg = "🚨 Fique ligado!\n\nAcompanhe os próximos vídeos, participe dos quizzes e compartilhe o que aprendeu. O conhecimento é o primeiro passo para a ação! 🌍✨";
