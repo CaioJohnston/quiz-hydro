@@ -17,12 +17,23 @@
   <body>
     <div class="container">
       <h1 class="title-center">Quiz Hydro</h1>
-      <div id="login" class="flex-center flex-column">
+
+      <div id="check-matricula" class="flex-center flex-column">
+        <form id="check-form" class="flex-center flex-column">
+          <input type="text" id="check-employee-id" name="employee_id"
+            placeholder="Digite sua matrícula" required />
+          <p class="register-link" id="btn-new-user">Cadastrar novo usuário</p>
+          <p id="check-error" class="error hidden">Matrícula não encontrada</p>
+          <p id="check-loading" class="info hidden">Verificando...</p>
+        </form>
+      </div>
+
+      <div id="login" class="flex-center flex-column hidden">
         <form id="login-form" class="flex-center flex-column">
-          <input type="text" id="fullname" name="fullname"
-            placeholder="Nome completo" required />
           <input type="text" id="employee_id" name="employee_id"
             placeholder="Matrícula" required />
+          <input type="text" id="fullname" name="fullname"
+            placeholder="Nome completo" required />
           <input type="text" id="company" name="company"
             placeholder="Nome da empresa" required />
           <input type="text" id="job_title" name="job_title"
@@ -34,8 +45,10 @@
           <button type="submit" class="btn">Iniciar Quiz</button>
           <p id="login-error" class="error hidden">Por favor, preencha todos os
             campos corretamente</p>
+          <p class="return-link" id="btn-back">Voltar para tela de login</p>
         </form>
       </div>
+
       <div id="home" class="flex-center flex-column hidden">
         <a class="btn" href="./pages/game.html">Jogar</a>
       </div>

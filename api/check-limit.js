@@ -10,26 +10,30 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Método não permitido' });
   }
 
-  const { matr, empresa } = req.body;
+  const { matricula } = req.body;
 
   const { data, error } = await supabase
     .from("quiz_logs")
-    .select("data_acesso")
-    .eq("matr", matr)
-    .eq("empresa", empresa);
+    .select("nome, matr, empresa, cargo, tel")
+    .eq("matr", matricula)
+    .order('data_acesso', { ascending: false })
+    .limit(1);
 
-  if (error) return res.status(500).json({ error: error.message });
+  if (error) {
+    return res.status(500).json({ error: error.message });
+  }
 
-  const hoje = new Date();
-  const domingo = new Date(hoje);
-  domingo.setDate(hoje.getDate() - hoje.getDay());
+  if (data && data.length > 0) {
+    const user = {
+      fullname: data[0].nome,
+      employee_id: data[0].matr,
+      company: data[0].empresa,
+      job_title: data[0].cargo,
+      phone: data[0].tel
+    };
 
-  const jogosDaSemana = data.filter((registro) => {
-    const dataRegistro = new Date(registro.data_acesso);
-    return dataRegistro >= domingo;
-  });
+    return res.status(200).json({ exists: true, user });
+  }
 
-  const permitido = jogosDaSemana.length < 2;
-
-  return res.status(200).json({ permitido });
+  return res.status(200).json({ exists: false });
 }
