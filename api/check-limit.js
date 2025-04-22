@@ -12,27 +12,38 @@ export default async function handler(req, res) {
 
   const { matr, empresa } = req.body;
 
-  const { data, error } = await supabase
-    .from("quiz_logs")
-    .select("data_acesso")
-    .eq("matr", matr)
-    .eq("empresa", empresa);
+  if (!matr || !empresa) {
+    return res.status(400).json({ error: 'Matrícula e empresa são obrigatórias' });
+  }
 
-  if (error) return res.status(500).json({ error: error.message });
+  try {
+    const hoje = new Date();
+    const domingo = new Date(hoje);
+    domingo.setDate(hoje.getDate() - hoje.getDay());
+    domingo.setHours(0, 0, 0, 0);
 
-  const hoje = new Date();
-  const domingo = new Date(hoje);
-  domingo.setDate(hoje.getDate() - hoje.getDay());
+    const { data, error } = await supabase
+      .from("quiz_logs")
+      .select("data_acesso")
+      .eq("matr", matr)
+      .eq("empresa", empresa)
+      .gte("data_acesso", domingo.toISOString());
 
-  const jogosDaSemana = data.filter((registro) => {
-    const dataRegistro = new Date(registro.data_acesso);
-    return dataRegistro >= domingo;
-  });
+    if (error) {
+      console.error("Erro na consulta:", error);
+      return res.status(500).json({ error: error.message });
+    }
 
-  const permitido = jogosDaSemana.length < 2;
+    const tentativas = data.length;
+    const permitido = tentativas < 2;
 
-  return res.status(200).json({
-    permitido,
-    jogos_da_semana: jogosDaSemana
-  });
+    return res.status(200).json({
+      permitido,
+      tentativas
+    });
+
+  } catch (error) {
+    console.error("Erro:", error);
+    return res.status(500).json({ error: error.message });
+  }
 }
