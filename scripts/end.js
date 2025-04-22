@@ -12,45 +12,69 @@ thankName.innerText = `${name}, obrigado por jogar!`;
 document.addEventListener("DOMContentLoaded", async () => {
   const correct = parseInt(correctAnswers, 10);
   const total = parseInt(mostRecentScore, 10);
-  const registros = await getJogosDaSemana(matr);
-  const tentativas = registros.length || 0;
 
-  // Enviar para o banco (sem revalidar limite)
-  const save = await fetch('/api/save-score', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      nome: userData.fullname,
-      matr: userData.employee_id,
-      empresa: userData.company,
-      cargo: userData.job_title,
-      tel: userData.phone,
-      acertos: correct
-    })
-  });
+  try {
+    // Verificar quantas vezes o usuário jogou esta semana
+    const checkLimitResponse = await fetch('/api/check-limit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        matr: userData.employee_id,
+        empresa: userData.company
+      })
+    });
 
-  const saveResult = await save.json();
+    if (!checkLimitResponse.ok) {
+      throw new Error(`Erro na API: ${checkLimitResponse.status}`);
+    }
 
-  if (!saveResult.success) {
-    finalScore.innerText = "❌ Erro ao salvar seus dados. Tente novamente mais tarde.";
-    return;
+    const limitData = await checkLimitResponse.json();
+    const tentativas = limitData.permitido ? 0 : 1;
+
+    // Enviar para o banco (sem revalidar limite)
+    const save = await fetch('/api/save-score', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        nome: userData.fullname,
+        matr: userData.employee_id,
+        empresa: userData.company,
+        cargo: userData.job_title,
+        tel: userData.phone,
+        acertos: correct
+      })
+    });
+
+    if (!save.ok) {
+      throw new Error(`Erro ao salvar: ${save.status}`);
+    }
+
+    const saveResult = await save.json();
+
+    if (!saveResult.success) {
+      finalScore.innerText = "❌ Erro ao salvar seus dados. Tente novamente mais tarde.";
+      return;
+    }
+
+    // Determina a mensagem com base no desempenho e no número de tentativas
+    let feedbackMsg = "";
+    if (correct >= 4) {
+      feedbackMsg = "🎉 Parabéns!\n\nVocê mandou muito bem no quiz! 👏\nIsso mostra que você está ligado nos temas da COP 30. Continue assim! 🌎💚";
+    } else if (correct >= 3 && tentativas >= 1) {
+      feedbackMsg = "🚨 Fique ligado!\n\nAcompanhe os próximos vídeos, participe dos quizzes e compartilhe o que aprendeu. O conhecimento é o primeiro passo para a ação! 🌍✨";
+    } else {
+      feedbackMsg = "💡 Quase lá!\n\nVocê respondeu algumas perguntas, mas ainda dá pra melhorar! Que tal assistir novamente ao vídeo e tentar o quiz mais uma vez?";
+    }
+
+    finalScore.innerText = `Você acertou ${correct} de ${total} questões!\n\n${feedbackMsg}`;
+
+  } catch (error) {
+    console.error("Erro:", error);
+    // Mesmo com erro, mostramos algum feedback básico
+    finalScore.innerText = `Você acertou ${correct} de ${total} questões!\n\n💡 Obrigado por participar do nosso quiz!`;
   }
 
-  let feedbackMsg = "";
-  if (correct >= 4) {
-    feedbackMsg = "🎉 Parabéns!\n\nVocê mandou muito bem no quiz! 👏\nIsso mostra que você está ligado nos temas da COP 30. Continue assim! 🌎💚";
-  } else if (correct >= 3 && tentativas >= 1) {
-    feedbackMsg = "🚨 Fique ligado!\n\nAcompanhe os próximos vídeos, participe dos quizzes e compartilhe o que aprendeu. O conhecimento é o primeiro passo para a ação! 🌍✨";
-  } else if (correct < 3 && tentativas >= 1) {
-    feedbackMsg = "📣 Fique Ligado nos Conteúdos:\n🚨 Fique ligado!\nAcompanhe os próximos vídeos, participe dos quizzes e compartilhe o que aprendeu. O conhecimento é o primeiro passo para a ação!🌍✨"
-  }
-  else {
-    feedbackMsg = "💡 Quase lá!\n\nVocê respondeu algumas perguntas, mas ainda dá pra melhorar! Que tal assistir novamente ao vídeo e tentar o quiz mais uma vez?";
-  }
-
-  finalScore.innerText = `Você acertou ${correct} de ${total} questões!\n\n${feedbackMsg}`;
-
-  // Botão de retorno
+  // Botão de retorno (sempre mostra, mesmo com erro)
   const restartBtn = document.createElement("button");
   restartBtn.innerText = "Voltar à Página Inicial";
   restartBtn.className = "btn";
