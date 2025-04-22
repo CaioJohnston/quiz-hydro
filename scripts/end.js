@@ -12,27 +12,9 @@ thankName.innerText = `${name}, obrigado por jogar!`;
 document.addEventListener("DOMContentLoaded", async () => {
   const correct = parseInt(correctAnswers, 10);
   const total = parseInt(mostRecentScore, 10);
+  const tentativas = userData.tentativas || 0;
 
-  // Verifica limite
-  const check = await fetch('/api/check-limit', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      matr: userData.employee_id,
-      empresa: userData.company
-    })
-  });
-
-  const checkResult = await check.json();
-
-  if (!checkResult || !checkResult.permitido) {
-    finalScore.innerText = "⚠️ Você já jogou 2 vezes nesta semana. Volte na próxima semana.";
-    return;
-  }
-
-  const tentativas = checkResult.tentativas || 0;
-
-  // Enviar dados para o banco
+  // Enviar para o banco (sem revalidar limite)
   const save = await fetch('/api/save-score', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -53,20 +35,19 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  // Define mensagem final
   let feedbackMsg = "";
   if (correct >= 4) {
     feedbackMsg = "🎉 Parabéns!\n\nVocê mandou muito bem no quiz! 👏\nIsso mostra que você está ligado nos temas da COP 30. Continue assim! 🌎💚";
-  } else if (tentativas + 1 == 2) {
+  } else if (tentativas + 1 >= 2) {
     feedbackMsg = "🚨 Fique ligado!\n\nAcompanhe os próximos vídeos, participe dos quizzes e compartilhe o que aprendeu. O conhecimento é o primeiro passo para a ação! 🌍✨";
   } else {
     feedbackMsg = "💡 Quase lá!\n\nVocê respondeu algumas perguntas, mas ainda dá pra melhorar! Que tal assistir novamente ao vídeo e tentar o quiz mais uma vez?";
   }
 
   finalScore.innerText = `Você acertou ${correct} de ${total} questões!\n\n${feedbackMsg}`;
-});
 
-const restartBtn = document.createElement("button");
+  // Botão de retorno
+  const restartBtn = document.createElement("button");
   restartBtn.innerText = "Voltar à Página Inicial";
   restartBtn.className = "btn";
   restartBtn.style.marginTop = "30px";
@@ -75,3 +56,4 @@ const restartBtn = document.createElement("button");
   });
 
   document.getElementById("end").appendChild(restartBtn);
+});

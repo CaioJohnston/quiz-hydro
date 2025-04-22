@@ -199,6 +199,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const data = await response.json();
         const permitido = data.permitido;
+        const tentativas = data.tentativas || 0;
 
         if (!permitido) {
           loginError.innerText = 'Você já jogou o quiz 2 vezes nesta semana.';
