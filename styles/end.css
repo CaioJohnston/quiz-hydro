@@ -44,3 +44,14 @@ h1 {
     color: #fff;
     font-weight: bold;
 }
+
+#end .btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-weight: bold;
+    background-color: #007E7A;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+  }
