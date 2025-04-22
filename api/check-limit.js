@@ -10,30 +10,36 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Método não permitido' });
   }
 
-  const { matricula } = req.body;
+  const { matr, empresa } = req.body;
 
-  const { data, error } = await supabase
-    .from("quiz_logs")
-    .select("nome, matr, empresa, cargo, tel")
-    .eq("matr", matricula)
-    .order('data_acesso', { ascending: false })
-    .limit(1);
+  if (!matr) {
+    return res.status(400).json({ error: 'Matrícula não fornecida' });
+  }
 
-  if (error) {
+  try {
+    // Consultar registros do quiz para o usuário na semana atual
+    const hoje = new Date();
+    const domingo = new Date(hoje);
+    domingo.setDate(hoje.getDate() - hoje.getDay()); // início da semana
+    domingo.setHours(0, 0, 0, 0); // início do dia
+
+    const { data, error } = await supabase
+      .from("quiz_logs")
+      .select("*")
+      .eq("matr", matr)
+      .gte("data_acesso", domingo.toISOString());
+
+    if (error) {
+      console.error("Erro na consulta:", error);
+      return res.status(500).json({ error: error.message });
+    }
+
+    // Verificar se o usuário já jogou 2 vezes nesta semana
+    const permitido = data.length < 2;
+    
+    return res.status(200).json({ permitido });
+  } catch (error) {
+    console.error("Erro:", error);
     return res.status(500).json({ error: error.message });
   }
-
-  if (data && data.length > 0) {
-    const user = {
-      fullname: data[0].nome,
-      employee_id: data[0].matr,
-      company: data[0].empresa,
-      job_title: data[0].cargo,
-      phone: data[0].tel
-    };
-
-    return res.status(200).json({ exists: true, user });
-  }
-
-  return res.status(200).json({ exists: false });
 }

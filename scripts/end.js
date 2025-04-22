@@ -5,13 +5,13 @@ const correctAnswers = localStorage.getItem('correctAnswers');
 const userData = JSON.parse(localStorage.getItem('userData'));
 
 const name = userData.fullname.split(' ')[0].charAt(0).toUpperCase() +
-              userData.fullname.split(' ')[0].slice(1).toLowerCase();
+  userData.fullname.split(' ')[0].slice(1).toLowerCase();
 
 finalScore.innerText = `Você acertou ${correctAnswers} de ${mostRecentScore} questões!`;
 thankName.innerText = `${name}, obrigado por jogar!`;
 
 document.addEventListener("DOMContentLoaded", async () => {
-  const check = await fetch('/api/check-limit.js', {
+  const check = await fetch('/api/check-limit', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ matr: userData.employee_id })
@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  const save = await fetch('/api/save-score.js', {
+  const save = await fetch('/api/save-score', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
