@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   let feedbackMsg = "";
   if (correct >= 4) {
     feedbackMsg = "🎉 Parabéns!\n\nVocê mandou muito bem no quiz! 👏\nIsso mostra que você está ligado nos temas da COP 30. Continue assim! 🌎💚";
-  } else if (tentativas + 1 >= 2) {
+  } else if (correct >= 3 && tentativas >= 1) {
     feedbackMsg = "🚨 Fique ligado!\n\nAcompanhe os próximos vídeos, participe dos quizzes e compartilhe o que aprendeu. O conhecimento é o primeiro passo para a ação! 🌍✨";
   } else {
     feedbackMsg = "💡 Quase lá!\n\nVocê respondeu algumas perguntas, mas ainda dá pra melhorar! Que tal assistir novamente ao vídeo e tentar o quiz mais uma vez?";
