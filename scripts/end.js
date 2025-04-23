@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     let feedbackMsg = "";
 
-    if (correct >= 4 && tentativasAnteriores == 0) {
+    if (correct >= 4) {
       feedbackMsg = "🎉 Parabéns!\n\nVocê mandou muito bem no quiz! 👏\nIsso mostra que você está ligado nos temas da COP 30. Continue assim! 🌎💚";
       console.log(tentativasAnteriores);
     } else if (correct <= 3 && tentativasAnteriores >= 1) {
