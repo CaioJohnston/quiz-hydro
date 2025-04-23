@@ -81,6 +81,36 @@ input:valid {
     border-color: #28a745;
 }
 
+#logo-footer {
+    display: none;
+    /* Inicialmente oculto */
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    /* Espaçamento menor entre logos */
+    width: 100%;
+    margin-top: 40px;
+    /* Espaçamento após o botão "Voltar" */
+    padding-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+#logo-footer img {
+    height: 50px;
+    width: auto;
+    object-fit: contain;
+}
+
+@media only screen and (max-width: 768px) {
+    #logo-footer {
+        gap: 30px;
+    }
+
+    #logo-footer img {
+        height: 40px;
+    }
+}
+
 @media only screen and (max-width: 480px) {
     input {
         font-size: 1.6rem;
@@ -89,6 +119,14 @@ input:valid {
 
     .register-link {
         font-size: 1.6rem;
+    }
+
+    #logo-footer {
+        gap: 20px;
+    }
+
+    #logo-footer img {
+        height: 35px;
     }
 }
 

@@ -13,6 +13,24 @@ document.addEventListener('DOMContentLoaded', function () {
   const loginError = document.getElementById('login-error');
   const phoneInput = document.getElementById('phone');
   const textInputs = document.querySelectorAll('input[type="text"]');
+  const isLoginVisible = !loginDiv.classList.contains('hidden');
+
+  function adjustLogoPosition(isLoginVisible) {
+    const logoContainer = document.getElementById('logo-container');
+    const logoFooter = document.getElementById('logo-footer');
+
+    if (isLoginVisible) {
+      logoContainer.style.display = 'none';
+
+      logoFooter.style.display = 'flex';
+    } else {
+      logoContainer.style.display = 'flex';
+      logoContainer.style.position = 'absolute';
+      logoContainer.style.top = '100px';
+
+      logoFooter.style.display = 'none';
+    }
+  }
 
   function capitalizeWords(text) {
     return text
@@ -154,6 +172,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       loginDiv.classList.add('hidden');
       checkMatriculaDiv.classList.remove('hidden');
+      adjustLogoPosition(false);
 
       if (checkEmployeeId) checkEmployeeId.focus();
     });
@@ -168,6 +187,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     checkMatriculaDiv.classList.add('hidden');
     loginDiv.classList.remove('hidden');
+    adjustLogoPosition(true);
   });
 
   const loginForm = document.getElementById('login-form');
@@ -215,7 +235,7 @@ document.addEventListener('DOMContentLoaded', function () {
           phone: phoneValue,
           tentativas
         };
-        
+
         localStorage.setItem('userData', JSON.stringify(userData));;
 
         loginDiv.classList.add('hidden');
