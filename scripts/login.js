@@ -291,6 +291,8 @@ document.addEventListener('DOMContentLoaded', function () {
         localStorage.setItem('userData', JSON.stringify(userData));
         loginDiv.classList.add('hidden');
         homeDiv.classList.remove('hidden');
+
+        adjustLogoPosition(false);
       } catch (error) {
         console.error('Erro:', error);
         loginError.innerText = 'Ocorreu um erro. Tente novamente.';
