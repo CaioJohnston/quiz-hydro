@@ -285,6 +285,16 @@ input::placeholder {
 
   #logo-container {
     gap: 50px;
+    position: absolute;
+    top: 50px !important;
+  }
+
+  .container:before {
+    content: '';
+    display: block;
+    height: 80px;
+    /* Ajuste esse valor conforme necessário */
+    width: 100%;
   }
 
   #logo-container img {
@@ -399,5 +409,19 @@ input::placeholder {
     top: 20px;
     left: 0;
     right: 0;
+  }
+}
+
+@media only screen and (max-height: 739px) {
+  #logo-container {
+    position: absolute;
+    top: 40px !important;
+  }
+
+  .container:before {
+    content: '';
+    display: block;
+    height: 90px;
+    width: 100%;
   }
 }

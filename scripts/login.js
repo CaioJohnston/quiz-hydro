@@ -15,22 +15,38 @@ document.addEventListener('DOMContentLoaded', function () {
   const textInputs = document.querySelectorAll('input[type="text"]');
   const isLoginVisible = !loginDiv.classList.contains('hidden');
 
+  // Dados de usuários de teste
+  const testUsers = {
+    '12345': {
+      fullname: 'Usuário Teste',
+      employee_id: '12345',
+      company: 'Hydro',
+      job_title: 'Desenvolvedor',
+      phone: '(91) 98765-4321',
+      tentativas: 0,
+      teste: true // Marca especial para usuário de teste
+    }
+  };
+
   function adjustLogoPosition(isLoginVisible) {
     const logoContainer = document.getElementById('logo-container');
     const logoFooter = document.getElementById('logo-footer');
 
-    if (isLoginVisible) {
-      logoContainer.style.display = 'none';
-
-      logoFooter.style.display = 'flex';
-    } else {
-      logoContainer.style.display = 'flex';
-      logoContainer.style.position = 'absolute';
-      logoContainer.style.top = '100px';
-
-      logoFooter.style.display = 'none';
+    if (logoContainer && logoFooter) {
+      if (isLoginVisible) {
+        logoContainer.style.display = 'none';
+        logoFooter.style.display = 'flex';
+      } else {
+        logoContainer.style.display = 'flex';
+        logoContainer.style.position = 'absolute';
+        logoContainer.style.top = '100px';
+        logoFooter.style.display = 'none';
+      }
     }
   }
+
+  // Aplicar o ajuste de posição do logo ao carregar a página
+  adjustLogoPosition(isLoginVisible);
 
   function capitalizeWords(text) {
     return text
@@ -110,6 +126,15 @@ document.addEventListener('DOMContentLoaded', function () {
     try {
       const isLocalhost = window.location.hostname === 'localhost' ||
         window.location.hostname === '127.0.0.1';
+
+      // Verificar primeiro se é um usuário de teste
+      if (testUsers[matricula]) {
+        localStorage.setItem('userData', JSON.stringify(testUsers[matricula]));
+        checkLoading.classList.add('hidden');
+        checkMatriculaDiv.classList.add('hidden');
+        homeDiv.classList.remove('hidden');
+        return;
+      }
 
       if (isLocalhost) {
         setTimeout(() => {
@@ -212,6 +237,29 @@ document.addEventListener('DOMContentLoaded', function () {
       }
 
       try {
+        // Verificar se estamos em ambiente local ou se o ID é um usuário de teste
+        const isLocalhost = window.location.hostname === 'localhost' ||
+          window.location.hostname === '127.0.0.1';
+
+        // Se for o usuário teste ou ambiente local, permitir sempre
+        if (employee_id === '12345' || isLocalhost) {
+          const userData = {
+            fullname,
+            employee_id,
+            company,
+            job_title,
+            phone: phoneValue,
+            tentativas: 0,
+            teste: true
+          };
+
+          localStorage.setItem('userData', JSON.stringify(userData));
+          loginDiv.classList.add('hidden');
+          homeDiv.classList.remove('hidden');
+          return;
+        }
+
+        // Para outros usuários, verificar limites normalmente
         const response = await fetch('/api/check-limit', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -240,8 +288,7 @@ document.addEventListener('DOMContentLoaded', function () {
           tentativas
         };
 
-        localStorage.setItem('userData', JSON.stringify(userData));;
-
+        localStorage.setItem('userData', JSON.stringify(userData));
         loginDiv.classList.add('hidden');
         homeDiv.classList.remove('hidden');
       } catch (error) {
