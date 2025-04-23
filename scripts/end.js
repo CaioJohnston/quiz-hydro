@@ -104,6 +104,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   window.addEventListener('resize', applyMediaQueries);
 
   restartBtn.addEventListener("click", () => {
+    localStorage.setItem('returnToQuiz', 'true');
     window.location.href = "../index.html";
   });
 

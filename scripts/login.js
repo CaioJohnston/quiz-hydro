@@ -15,6 +15,39 @@ document.addEventListener('DOMContentLoaded', function () {
   const textInputs = document.querySelectorAll('input[type="text"]');
   const isLoginVisible = !loginDiv.classList.contains('hidden');
 
+  // Verificar se o usuário está retornando do quiz
+  const checkReturnFromQuiz = () => {
+    if (localStorage.getItem('returnToQuiz')) {
+      // Limpar o sinalizador
+      localStorage.removeItem('returnToQuiz');
+
+      // Mostrar a tela de verificação de matrícula (segunda tentativa)
+      loginDiv.classList.add('hidden');
+      checkMatriculaDiv.classList.remove('hidden');
+      homeDiv.classList.add('hidden');
+      adjustLogoPosition(false);
+
+      // Focar o input da matrícula
+      setTimeout(() => {
+        checkEmployeeId.focus();
+      }, 100);
+
+      return true;
+    }
+    return false;
+  };
+
+  // Verificar se o usuário está retornando do quiz imediatamente
+  if (!checkReturnFromQuiz()) {
+    // Se não estiver retornando, ajustar a posição do logo com base na tela atual
+    adjustLogoPosition(isLoginVisible);
+
+    // Focar o primeiro campo do formulário de cadastro
+    setTimeout(() => {
+      document.getElementById('employee_id').focus();
+    }, 100);
+  }
+
   // Dados de usuários de teste
   const testUsers = {
     '12345': {
@@ -44,9 +77,6 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     }
   }
-
-  // Aplicar o ajuste de posição do logo ao carregar a página
-  adjustLogoPosition(isLoginVisible);
 
   function capitalizeWords(text) {
     return text
@@ -133,6 +163,7 @@ document.addEventListener('DOMContentLoaded', function () {
         checkLoading.classList.add('hidden');
         checkMatriculaDiv.classList.add('hidden');
         homeDiv.classList.remove('hidden');
+        adjustLogoPosition(false);
         return;
       }
 
@@ -168,6 +199,7 @@ document.addEventListener('DOMContentLoaded', function () {
             localStorage.setItem('userData', JSON.stringify(data.user));
             checkMatriculaDiv.classList.add('hidden');
             homeDiv.classList.remove('hidden');
+            adjustLogoPosition(false);
           } else {
             checkError.innerText = 'Você já jogou 2 vezes nesta semana.';
             checkError.classList.remove('hidden');
@@ -195,11 +227,9 @@ document.addEventListener('DOMContentLoaded', function () {
       if (checkError) checkError.classList.add('hidden');
       if (checkLoading) checkLoading.classList.add('hidden');
 
-      loginDiv.classList.add('hidden');
-      checkMatriculaDiv.classList.remove('hidden');
-      adjustLogoPosition(false);
-
-      if (checkEmployeeId) checkEmployeeId.focus();
+      loginDiv.classList.remove('hidden');
+      checkMatriculaDiv.classList.add('hidden');
+      adjustLogoPosition(true);
     });
   }
 
@@ -256,6 +286,7 @@ document.addEventListener('DOMContentLoaded', function () {
           localStorage.setItem('userData', JSON.stringify(userData));
           loginDiv.classList.add('hidden');
           homeDiv.classList.remove('hidden');
+          adjustLogoPosition(false);
           return;
         }
 
@@ -291,7 +322,6 @@ document.addEventListener('DOMContentLoaded', function () {
         localStorage.setItem('userData', JSON.stringify(userData));
         loginDiv.classList.add('hidden');
         homeDiv.classList.remove('hidden');
-
         adjustLogoPosition(false);
       } catch (error) {
         console.error('Erro:', error);
