@@ -384,3 +384,20 @@ input::placeholder {
     margin-bottom: 8px;
   }
 }
+
+@media only screen and (max-height: 532px) {
+  #logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* gap: calc(20px + (200 - 20) * ((100vw - 320px) / (1200 - 320))); */
+    gap: 200px;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    width: 100%;
+    position: absolute;
+    top: 20px;
+    left: 0;
+    right: 0;
+  }
+}
