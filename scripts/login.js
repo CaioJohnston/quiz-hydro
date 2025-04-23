@@ -188,6 +188,10 @@ document.addEventListener('DOMContentLoaded', function () {
     checkMatriculaDiv.classList.add('hidden');
     loginDiv.classList.remove('hidden');
     adjustLogoPosition(true);
+
+    setTimeout(() => {
+      document.getElementById('employee_id').focus();
+    }, 100);
   });
 
   const loginForm = document.getElementById('login-form');
