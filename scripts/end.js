@@ -4,10 +4,10 @@ const mostRecentScore = localStorage.getItem('mostRecentScore');
 const correctAnswers = localStorage.getItem('correctAnswers');
 const userData = JSON.parse(localStorage.getItem('userData'));
 
-const name = userData.fullname.split(' ')[0].charAt(0).toUpperCase() +
+const firstName = userData.fullname.split(' ')[0].charAt(0).toUpperCase() +
   userData.fullname.split(' ')[0].slice(1).toLowerCase();
 
-thankName.innerText = `${name}, obrigado por jogar!`;
+thankName.innerText = `${firstName}, obrigado por jogar!`;
 
 document.addEventListener("DOMContentLoaded", async () => {
   const correct = parseInt(correctAnswers, 10);
@@ -83,6 +83,26 @@ document.addEventListener("DOMContentLoaded", async () => {
   restartBtn.innerText = "Voltar à Página Inicial";
   restartBtn.className = "btn";
   restartBtn.style.marginTop = "30px";
+
+  restartBtn.style.padding = "1rem 1.5rem";
+  restartBtn.style.fontSize = "1.4rem";
+
+  const applyMediaQueries = () => {
+    if (window.innerWidth <= 768) {
+      restartBtn.style.width = "100%";
+      restartBtn.style.fontSize = "1.4rem";
+      restartBtn.style.padding = "0.8rem";
+    } else {
+      restartBtn.style.width = "auto";
+      restartBtn.style.fontSize = "1.4rem";
+      restartBtn.style.padding = "1rem 1.5rem";
+    }
+  };
+
+  // Apply media queries immediately and on resize
+  applyMediaQueries();
+  window.addEventListener('resize', applyMediaQueries);
+
   restartBtn.addEventListener("click", () => {
     window.location.href = "../index.html";
   });

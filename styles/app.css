@@ -1,3 +1,7 @@
+body {
+  background-color: #438079;
+}
+
 :root {
   background-color: #fff;
   font-size: 62.5%;
@@ -56,9 +60,12 @@ h3 {
   min-height: 100vh;
   display: flex;
   justify-content: center;
+  /* Mantém centralização vertical para os outros elementos */
   align-items: center;
   flex-direction: column;
   padding: 2rem;
+  position: relative;
+  /* Adicionado para posicionamento absoluto do logo */
 }
 
 .container>* {
@@ -98,7 +105,7 @@ h3 {
   border-radius: 1.5rem;
   margin-bottom: 1rem;
   text-decoration: none;
-  color: #444D55;
+  color: #ffffff;
   background-color: #768692;
 }
 
@@ -151,9 +158,38 @@ input::placeholder {
   width: 0%;
 }
 
+
+#logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: calc(20px + (200 - 20) * ((100vw - 320px) / (1200 - 320)));
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  width: 100%;
+  position: absolute;
+  top: 20px;
+  left: 0;
+  right: 0;
+}
+
+#logo-container img {
+  height: 60px;
+  width: auto;
+  object-fit: contain;
+}
+
+#logo-container img:first-child {
+  height: 90px;
+}
+
 /* Media Queries */
 
 @media only screen and (max-width: 768px) {
+  body {
+    background-color: #fff;
+  }
+
   h1 {
     font-size: 7rem;
     margin-bottom: 3rem;
@@ -181,9 +217,14 @@ input::placeholder {
   input {
     font-size: 1.6rem;
   }
+
 }
 
 @media only screen and (max-width: 480px) {
+  body {
+    background-color: #fff;
+  }
+
   h1 {
     font-size: 5rem;
     margin-bottom: 2rem;
@@ -202,6 +243,14 @@ input::placeholder {
     font-size: 1.8rem;
   }
 
+  #logo-container {
+    gap: 10px;
+  }
+
+  #logo-container img {
+    max-height: 40px;
+  }
+
   .btn {
     font-size: 3rem;
     padding: 1rem 0;
@@ -211,6 +260,47 @@ input::placeholder {
   input {
     font-size: 1.4rem;
   }
+
+  .container {
+    max-width: 768px;
+    margin: 0 auto;
+    border-left: 0.2rem solid #eee;
+    border-right: 0.2rem solid #eee;
+    background-color: white;
+    box-shadow: 0 0 2rem rgba(0, 0, 0, 0.05);
+  }
+
+  .quiz-instructions {
+    max-width: 1000px;
+    text-align: left;
+    background-color: #f4f4f4;
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    font-size: 1rem;
+    color: #333;
+  }
+
+  .quiz-instructions h2 {
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+    color: #007E7A;
+  }
+
+  .quiz-instructions p {
+    font-size: 1.5rem;
+  }
+
+  .quiz-instructions ul {
+    margin: 10px 0;
+    padding-left: 20px;
+  }
+
+  .quiz-instructions ul li {
+    margin-bottom: 8px;
+    font-size: 1.5rem;
+  }
+
 }
 
 @media only screen and (min-width: 768px) {
@@ -222,30 +312,35 @@ input::placeholder {
     background-color: white;
     box-shadow: 0 0 2rem rgba(0, 0, 0, 0.05);
   }
-}
 
-.quiz-instructions {
-  max-width: 600px;
-  text-align: left;
-  background-color: #f4f4f4;
-  padding: 20px;
-  margin-bottom: 30px;
-  border-radius: 10px;
-  font-size: 1rem;
-  color: #333;
-}
+  .quiz-instructions {
+    max-width: 1000px;
+    text-align: left;
+    background-color: #f4f4f4;
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    font-size: 1rem;
+    color: #333;
+  }
 
-.quiz-instructions h2 {
-  margin-bottom: 10px;
-  font-size: 1.2rem;
-  color: #007E7A;
-}
+  .quiz-instructions h2 {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    color: #007E7A;
+  }
 
-.quiz-instructions ul {
-  margin: 10px 0;
-  padding-left: 20px;
-}
+  .quiz-instructions p {
+    font-size: 1.5rem;
+  }
 
-.quiz-instructions ul li {
-  margin-bottom: 8px;
+  .quiz-instructions ul {
+    margin: 10px 0;
+    padding-left: 20px;
+    font-size: 1.5rem;
+  }
+
+  .quiz-instructions ul li {
+    margin-bottom: 8px;
+  }
 }
