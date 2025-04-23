@@ -1,9 +1,12 @@
 .container {
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
+  /* Alterado de center para flex-start */
   align-items: center;
+  flex-direction: column;
+  padding: 2rem;
 }
 
 h1 {
@@ -62,8 +65,33 @@ h2 {
   transition: background 0.3s ease;
 }
 
+#logo-container-end {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 80px;
+  margin-bottom: 3rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+  width: 100%;
+  order: -1;
+}
+
 #end .btn:hover {
   background-color: #005f5d;
+}
+
+#logo-container-end img {
+  height: 60px;
+  width: auto;
+  object-fit: contain;
+}
+
+#end {
+  text-align: center;
+  width: 100%;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 @media only screen and (max-width: 480px) {
