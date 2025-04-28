@@ -17,7 +17,7 @@ const questions = [
         correct: 3
     },
     {
-        question: "A primeira COP aconteceu em que ano?",
+        question: "Em que ano ocorreu a primeira COP?",
         options: ["1992", "1994", "1995", "2000"],
         correct: 3
     },
@@ -27,8 +27,8 @@ const questions = [
         correct: 4
     },
     {
-        question: "Quantos países participam atualmente da COP?",
-        options: ["Mais de 90", "Cerca de 100", "Mais de 196", "150"],
+        question: "Quantos Estados participam atualmente da COP?",
+        options: ["Mais de 90 Estados", "Cerca de 100 Estados", "198 Estados", "150 Estados"],
         correct: 3
     },
     {
