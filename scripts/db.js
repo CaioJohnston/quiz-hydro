@@ -6,6 +6,10 @@ const SUPABASE_KEY = "YOUR_ANON_KEY";
 
 export const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
+//intervalo manual da semana (AQUI vc define)
+const SEMANA_INICIO = new Date("2025-04-28T00:00:00-03:00"); //inicio
+const SEMANA_FIM = new Date("2025-05-06T23:59:59-03:00");   //fim
+
 async function getJogosDaSemana(matr) {
   const { data, error } = await supabase
     .from("quiz_logs")
@@ -17,13 +21,9 @@ async function getJogosDaSemana(matr) {
     return [];
   }
 
-  const hoje = new Date();
-  const domingo = new Date(hoje);
-  domingo.setDate(hoje.getDate() - hoje.getDay()); // início da semana
-
   return data.filter(registro => {
     const dataRegistro = new Date(registro.data_acesso);
-    return dataRegistro >= domingo;
+    return dataRegistro >= SEMANA_INICIO && dataRegistro <= SEMANA_FIM;
   });
 }
 
