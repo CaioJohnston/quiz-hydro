@@ -12,17 +12,12 @@ let correctAnswers = 0;
 
 const questions = [
     {
-        question: "O que o mundo estará observando durante a COP 30?",
-        options: ["A produção de energia da Hydro", "A atuação da Hydro e da Albras", "Os investimentos estrangeiros", "A produção rural brasileira"],
-        correct: 2
-    },
-    {
         question: "O que cada empregado da Hydro e da Albras é chamado a ser?",
         options: ["Supervisor ambiental", "Guardião das metas", "Guardião das marcas", "Fiscal de sustentabilidade"],
         correct: 3
     },
     {
-        question: "Qual é a responsabilidade da Hydro e da Albras durante a COP 30, que será realizada no Pará?",
+        question: "Qual é a atuação da Hydro e da Albras durante a COP 30, que será realizada no Pará?",
         options: ["Aumentar a produção de alumínio", "Reduzir o número de funcionários", "Mostrar o impacto positivo de seus projetos sociais e de descarbonização", "Promover eventos culturais para turistas"],
         correct: 3
     },
