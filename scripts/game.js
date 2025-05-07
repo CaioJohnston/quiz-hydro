@@ -12,29 +12,29 @@ let correctAnswers = 0;
 
 const questions = [
     {
-        question: "O que significa a sigla COP no contexto climático?",
-        options: ["Congresso Oficial dos Países", "Conselho Operacional de Políticas", "Conferência das Partes", "Comissão de Organização Planetária"],
-        correct: 3
-    },
-    {
-        question: "Em que ano ocorreu a primeira COP?",
-        options: ["1992", "1994", "1995", "2000"],
-        correct: 3
-    },
-    {
-        question: "Qual cidade sediará a COP 30 em 2025?",
-        options: ["Manaus", "Brasília", "Nova York", "Belém"],
-        correct: 4
-    },
-    {
-        question: "Quantos Estados participam atualmente da COP?",
-        options: ["Mais de 90 Estados", "Cerca de 100 Estados", "198 Estados", "150 Estados"],
-        correct: 3
-    },
-    {
-        question: "Qual é o principal tema discutido nas conferências da COP?",
-        options: ["Desenvolvimento urbano", "Mudanças climáticas", "Economia digital", "Tecnologia espacial"],
+        question: "O que o mundo estará observando durante a COP 30?",
+        options: ["A produção de energia da Hydro", "A atuação da Hydro e da Albras", "Os investimentos estrangeiros", "A produção rural brasileira"],
         correct: 2
+    },
+    {
+        question: "O que cada empregado da Hydro e da Albras é chamado a ser?",
+        options: ["Supervisor ambiental", "Guardião das metas", "Guardião das marcas", "Fiscal de sustentabilidade"],
+        correct: 3
+    },
+    {
+        question: "Qual é a responsabilidade da Hydro e da Albras durante a COP 30, que será realizada no Pará?",
+        options: ["Aumentar a produção de alumínio", "Reduzir o número de funcionários", "Mostrar o impacto positivo de seus projetos sociais e de descarbonização", "Promover eventos culturais para turistas"],
+        correct: 3
+    },
+    {
+        question: "Onde devem ser buscadas informações confiáveis sobre a Hydro?",
+        options: ["Redes sociais externas", "Canais internos e externos oficiais da Hydro", "Grupos de WhatsApp", "Jornais locais"],
+        correct: 2
+    },
+    {
+        question: "O que a empresa quer evitar na comunicação?",
+        options: ["Uso de expressões que não condizem com a realidade", "Uso de termos técnicos demais", "Falar sobre sustentabilidade", "Mencionar a Amazônia"],
+        correct: 1
     }
 ];
 
