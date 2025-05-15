@@ -6,8 +6,8 @@ const supabase = createClient(
 );
 
 // Defina o mesmo intervalo manual usado no db.js
-const SEMANA_INICIO = new Date("2025-05-07T00:00:00-03:00");
-const SEMANA_FIM = new Date("2025-05-15T23:59:59-03:00");
+const SEMANA_INICIO = new Date("2025-05-15T00:00:00-03:00");
+const SEMANA_FIM = new Date("2025-05-23T23:59:59-03:00");
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
