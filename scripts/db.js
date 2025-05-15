@@ -7,8 +7,8 @@ const SUPABASE_KEY = "YOUR_ANON_KEY";
 export const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 //intervalo manual da semana (AQUI vc define)
-const SEMANA_INICIO = new Date("2025-05-07T00:00:00-03:00");
-const SEMANA_FIM = new Date("2025-05-15T23:59:59-03:00");
+const SEMANA_INICIO = new Date("2025-05-15T00:00:00-03:00");
+const SEMANA_FIM = new Date("2025-05-23T23:59:59-03:00");
 
 async function getJogosDaSemana(matr) {
   const { data, error } = await supabase
