@@ -12,24 +12,19 @@ let correctAnswers = 0;
 
 const questions = [
     {
-        question: "O que cada empregado da Hydro e da Albras é chamado a ser?",
-        options: ["Supervisor ambiental", "Guardião das metas", "Guardião das marcas", "Fiscal de sustentabilidade"],
-        correct: 3
-    },
-    {
-        question: "Qual é a atuação da Hydro e da Albras durante a COP 30, que será realizada no Pará?",
-        options: ["Aumentar a produção de alumínio", "Reduzir o número de funcionários", "Mostrar o impacto positivo de seus projetos sociais e de descarbonização", "Promover eventos culturais para turistas"],
-        correct: 3
-    },
-    {
-        question: "Onde devem ser buscadas informações confiáveis sobre a Hydro?",
-        options: ["Redes sociais externas", "Canais internos e externos oficiais da Hydro", "Grupos de WhatsApp", "Jornais locais"],
+        question: "Qual é a importância da participação das lideranças comunitárias na Iniciativa Barcarena Sustentável?",
+        options: ["Elas ajudam na comunicação com a mídia", "Elas indicam prioridades para os investimentos sociais", "Elas substituem a gestão da Hydro na região", "Elas substituem a gestão da Hydro na região"],
         correct: 2
     },
     {
-        question: "O que a empresa quer evitar na comunicação?",
-        options: ["Uso de expressões que não condizem com a realidade", "Uso de termos técnicos demais", "Falar sobre sustentabilidade", "Mencionar a Amazônia"],
+        question: "Quais organizações não-governamentais atuam junto com a Hydro no Programa Corredor?",
+        options: ["IPAM, IMAZON e CEIA", "WWF, Greenpeace e Imazon", "CEIA, SOS Mata Atlântica e IPAM", "IMAZON, PNUMA e IBAMA"],
         correct: 1
+    },
+    {
+        question: "Qual é a intenção da Hydro e Albras para a COP 30?",
+        options: ["Promover seus produtos", "Apresentar suas iniciativas para um futuro sustentável e socialmente justo", "Apresentar suas iniciativas para um futuro sustentável e socialmente justo", "Firmar novos contratos comerciais"],
+        correct: 2
     }
 ];
 
