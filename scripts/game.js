@@ -12,19 +12,19 @@ let correctAnswers = 0;
 
 const questions = [
     {
-        question: "Qual é a importância da participação das lideranças comunitárias na Iniciativa Barcarena Sustentável?",
-        options: ["Elas ajudam na comunicação com a mídia", "Elas indicam prioridades para os investimentos sociais", "Elas substituem a gestão da Hydro na região", "Elas substituem a gestão da Hydro na região"],
+        question: "Qual foi uma das principais mudanças feitas na refinaria Alunorte?",
+        options: ["Adoção de energia nuclear", "Troca de carvão por madeira", "Substituição de óleo combustível por gás natural", "Substituição de gás natural por diesel"],
+        correct: 3
+    },
+    {
+        question: "Qual tecnologia é utilizada em Mineração Paragominas para reabilitação ambiental?",
+        options: ["Injeção de cimento nas áreas mineradas", "Tailing Dry Backfill", "Reservatórios de lodo", "Compostagem acelerada"],
         correct: 2
     },
     {
-        question: "Quais organizações não-governamentais atuam junto com a Hydro no Programa Corredor?",
-        options: ["IPAM, IMAZON e CEIA", "WWF, Greenpeace e Imazon", "CEIA, SOS Mata Atlântica e IPAM", "IMAZON, PNUMA e IBAMA"],
-        correct: 1
-    },
-    {
-        question: "Qual é a intenção da Hydro e Albras para a COP 30?",
-        options: ["Promover seus produtos", "Apresentar suas iniciativas para um futuro sustentável e socialmente justo", "Apresentar suas iniciativas para um futuro sustentável e socialmente justo", "Firmar novos contratos comerciais"],
-        correct: 2
+        question: "Qual certificação a Albras recebeu pelo compromisso com a gestão de emissões?",
+        options: ["ISO 14001", "Selo Verde Internacional", "Selo Ouro do GHG Protocol", "Certificado Carbono Neutro Global"],
+        correct: 3
     }
 ];
 
